@@ -31,12 +31,18 @@ else:
 
 
 def _create_scoped_session(db):
+    """
+    创建线程安全的session
+    """
     return orm.scoped_session(lambda: orm.create_session(autocommit=False,
                                                          autoflush=False,
                                                          bind=db.engine))
 
 
 def _include_sqlalchemy(obj):
+    """
+    把 sqlalchemy 和 sqlalchemy.orm 的模块都加进 obj 
+    """
     for module in sqlalchemy, sqlalchemy.orm:
         for key in module.__all__:
             if not hasattr(obj, key):
@@ -131,6 +137,8 @@ def get_debug_queries():
         A string giving a rough estimation of where in your application
         query was issued.  The exact format is undefined so don't try
         to reconstruct filename or function name.
+
+    获取查询的debug信息。
     """
     return getattr(_request_ctx_stack.top, 'sqlalchemy_queries', [])
 
@@ -331,6 +339,7 @@ class SQLAlchemy(object):
         app.config.setdefault('SQLALCHEMY_ECHO', False)
         app.config.setdefault('SQLALCHEMY_RECORD_QUERIES', False)
 
+        # after_request钩子函数，移除session
         @app.after_request
         def shutdown_session(response):
             self.session.remove()
