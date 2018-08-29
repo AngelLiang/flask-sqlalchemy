@@ -161,11 +161,15 @@ class Pagination(object):
 
     @property
     def pages(self):
-        """The total number of pages"""
+        """The total number of pages
+        计算总页数
+        """
         return int(ceil(self.total / float(self.per_page)))
 
     def prev(self, error_out=False):
-        """Returns a :class:`Pagination` object for the previous page."""
+        """Returns a :class:`Pagination` object for the previous page.
+        上一页，返回一个 Pagination 对象。
+        """
         return self.query.paginate(self.page - 1, self.per_page, error_out)
 
     @property
@@ -178,7 +182,9 @@ class Pagination(object):
         return self.page > 1
 
     def next(self, error_out=False):
-        """Returns a :class:`Pagination` object for the next page."""
+        """Returns a :class:`Pagination` object for the next page.
+        下一页，返回一个 Pagination 对象。
+        """
         return self.query.paginate(self.page + 1, self.per_page, error_out)
 
     def have_next(self):
@@ -217,9 +223,11 @@ class BaseQuery(orm.Query):
         """
         if error_out and page < 1:
             abort(404)
+        # 开始查询，limit and offset，返回items
         items = self.limit(per_page).offset((page - 1) * per_page).all()
         if not items and page != 1 and error_out:
             abort(404)
+        # 返回一个 Pagination 对象
         return Pagination(self, page, per_page, self.count(), items)
 
 
