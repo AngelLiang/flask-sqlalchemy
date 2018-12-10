@@ -162,12 +162,14 @@ class Pagination(object):
     @property
     def pages(self):
         """The total number of pages
+
         计算总页数
         """
         return int(ceil(self.total / float(self.per_page)))
 
     def prev(self, error_out=False):
         """Returns a :class:`Pagination` object for the previous page.
+        
         上一页，返回一个 Pagination 对象。
         """
         return self.query.paginate(self.page - 1, self.per_page, error_out)
