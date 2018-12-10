@@ -673,9 +673,10 @@ class SQLAlchemy(object):
 
         self.use_native_unicode = use_native_unicode
         self.Query = query_class
+        # 创建 session
         self.session = self.create_scoped_session(session_options)
         self.Model = self.make_declarative_base(model_class, metadata)
-        self._engine_lock = Lock()
+        self._engine_lock = Lock()  # 锁
         self.app = app
         _include_sqlalchemy(self, query_class)
 
@@ -775,6 +776,7 @@ class SQLAlchemy(object):
                 'Defaulting SQLALCHEMY_DATABASE_URI to "sqlite:///:memory:".'
             )
 
+        # 设置config
         app.config.setdefault('SQLALCHEMY_DATABASE_URI', 'sqlite:///:memory:')
         app.config.setdefault('SQLALCHEMY_BINDS', None)
         app.config.setdefault('SQLALCHEMY_NATIVE_UNICODE', None)
@@ -957,6 +959,8 @@ class SQLAlchemy(object):
     def create_all(self, bind='__all__', app=None):
         """Creates all tables.
 
+        创建所有数据表
+
         .. versionchanged:: 0.12
            Parameters were added
         """
@@ -964,6 +968,8 @@ class SQLAlchemy(object):
 
     def drop_all(self, bind='__all__', app=None):
         """Drops all tables.
+
+        删除所有数据表
 
         .. versionchanged:: 0.12
            Parameters were added
