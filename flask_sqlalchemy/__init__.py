@@ -709,6 +709,15 @@ class SQLAlchemy(object):
     def __init__(self, app=None, use_native_unicode=True, session_options=None,
                  metadata=None, query_class=BaseQuery, model_class=Model,
                  engine_options=None):
+        """
+        :param app:
+        :param use_native_unicode:
+        :param session_options:
+        :param metadata:
+        :param query_class:
+        :param model_class:
+        :param engine_options:
+        """
 
         self.use_native_unicode = use_native_unicode
         self.Query = query_class
