@@ -711,12 +711,12 @@ class SQLAlchemy(object):
                  engine_options=None):
         """
         :param app:
-        :param use_native_unicode:
-        :param session_options:
+        :param use_native_unicode: bool
+        :param session_options: dict
         :param metadata:
-        :param query_class:
-        :param model_class:
-        :param engine_options:
+        :param query_class: BaseQuery
+        :param model_class:, Model
+        :param engine_options: dict
         """
 
         self.use_native_unicode = use_native_unicode
